@@ -20,12 +20,9 @@
                                         <div class="select">
                                             <select>
                                                 <option value="none">Locations</option>
-                                                <option value="none">New York</option>
-                                                <option value="none">California</option>
-                                                <option value="none">Washington</option>
-                                                <option value="none">Birmingham</option>
-                                                <option value="none">Chicago</option>
-                                                <option value="none">Phoenix</option>
+                                                {% for ctg in region %}
+                                                    <option value="none">{{ ctg.name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <i class="lni-target"></i>
@@ -60,7 +57,7 @@
                 <div id="categories-icon-slider" class="categories-wrapper owl-carousel owl-theme">
                     {% for ctg in categories %}
                         <div class="item">
-                            <a href="category.html">
+                            <a href="{% url 'product-list' %}">
                                 <div class="category-icon-item">
                                     <div class="icon-box">
                                         <div class="icon">
@@ -78,8 +75,6 @@
     </div>
 </section>
 
-{{ a }}
-{{ b }}
 <section class="featured section-padding">
     <div class="container">
         <h1 class="section-title">Latest Products</h1>

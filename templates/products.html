@@ -2,58 +2,53 @@
 
 {% block header %}
 <div id="hero-area">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 text-center">
-                <div class="contents-ctg">
-                    <div class="search-bar">
-                        <div class="search-inner">
-                            <form class="search-form">
-                                <div class="form-group inputwithicon">
-                                    <i class="lni-tag"></i>
-                                    <input type="text" name="customword" class="form-control"
-                                           placeholder="Enter Product Keyword">
-                                </div>
-                                <div class="form-group inputwithicon">
-                                    <i class="lni-target"></i>
-                                    <div class="select">
-                                        <select>
-                                            <option value="none">All Locations</option>
-                                            <option value="none">New York</option>
-                                            <option value="none">California</option>
-                                            <option value="none">Washington</option>
-                                            <option value="none">Birmingham</option>
-                                            <option value="none">Chicago</option>
-                                            <option value="none">Phoenix</option>
-                                        </select>
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-9 col-xs-12 text-center">
+                    <div class="contents">
+                        <h1 class="head-title">Welcome to The Largest <span class="year">Marketplace</span></h1>
+                        <p>Buy and sell everything from used cars to mobile phones and computers, or search for
+                            property, jobs and more</p>
+                        <div class="search-bar">
+                            <div class="search-inner">
+                                <form class="search-form">
+                                    <div class="form-group">
+                                        <input type="text" name="customword" class="form-control"
+                                               placeholder="What are you looking for?">
                                     </div>
-                                </div>
-                                <div class="form-group inputwithicon">
-                                    <i class="lni-menu"></i>
-                                    <div class="select">
-                                        <select>
-                                            <option value="none">Select Categories</option>
-                                            <option value="none">Mobiles</option>
-                                            <option value="none">Electronics</option>
-                                            <option value="none">Training</option>
-                                            <option value="none">Real Estate</option>
-                                            <option value="none">Services</option>
-                                            <option value="none">Training</option>
-                                            <option value="none">Vehicles</option>
-                                        </select>
+                                    <div class="form-group inputwithicon">
+                                        <div class="select">
+                                            <select>
+                                                <option value="none">Locations</option>
+                                                {% for ctg in region %}
+                                                    <option value="none">{{ ctg.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <i class="lni-target"></i>
                                     </div>
-                                </div>
-                                <button class="btn btn-common" type="button"><i class="lni-search"></i> Search Now
-                                </button>
-                            </form>
+                                    <div class="form-group inputwithicon">
+                                        <div class="select">
+                                            <select>
+                                                <option value="none">Select Catagory</option>
+                                                {% for ctg in categories %}
+                                                    <option value="none">{{ ctg.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <i class="lni-menu"></i>
+                                    </div>
+                                    <button class="btn btn-common" type="button"><i class="lni-search"></i> Search Now
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock header %}
 {% block content %}
 <div class="main-container section-padding">
@@ -74,48 +69,13 @@
                     <div class="widget categories">
                         <h4 class="widget-title">All Categories</h4>
                         <ul class="categories-list">
-                            <li>
+                            {% for prd in ctg %}
+                                <li>
                                 <a href="#">
-                                    <i class="lni-dinner"></i>
-                                    Hotel & Travels <span class="category-counter">(5)</span>
+                                    <i class="lni-dinner"></i>{{ prd.name }}<span class="category-counter">({{ prd.nm }})</span>
                                 </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="lni-control-panel"></i>
-                                    Services <span class="category-counter">(8)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="lni-github"></i>
-                                    Pets <span class="category-counter">(2)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="lni-coffee-cup"></i>
-                                    Restaurants <span class="category-counter">(3)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="lni-home"></i>
-                                    Real Estate <span class="category-counter">(4)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="lni-pencil"></i>
-                                    Jobs <span class="category-counter">(5)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="lni-display"></i>
-                                    Electronics <span class="category-counter">(9)</span>
-                                </a>
-                            </li>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="widget">
@@ -238,7 +198,7 @@
                                             <p class="dsc">{{ product.description }}</p>
                                             <div class="listing-bottom">
                                                 <h3 class="price float-left">${{ product.price }}</h3>
-                                                <a href="ads-details.html" class="btn btn-common float-right">View
+                                                <a href="{% url 'product-detail' pk=product.id %}" class="btn btn-common float-right">View
                                                     Details</a>
                                             </div>
                                         </div>

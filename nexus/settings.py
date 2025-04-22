@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'main',
     'category',
     'user',
-    'product'
+    'product',
+    'blog',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'user.context_processors.use_context'
+
             ],
         },
     },
@@ -87,6 +91,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

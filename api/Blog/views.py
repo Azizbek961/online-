@@ -3,13 +3,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from .serializers import BlogSerializer
-from blog.models import BLog
+from blog.models import Blog
 
 
 @api_view(['GET', 'POST'])
 def get_list_ctg(request):
     if request.method == "GET":
-        blog = BLog.objects.all()
+        blog = Blog.objects.all()
         result = BlogSerializer(blog, many=True)
         print(result.data)
         return Response({"data": result.data})
@@ -24,8 +24,8 @@ def get_list_ctg(request):
 @api_view(["GET", "PUT", "DELETE"])
 def detail_ctg(request, pk):
     try:
-        category = BLog.objects.get(pk=pk)
-    except BLog.DoesNotExist:
+        category = Blog.objects.get(pk=pk)
+    except Blog.DoesNotExist:
         return Response({"error": "Could not found"})
 
     if request.method == "GET":

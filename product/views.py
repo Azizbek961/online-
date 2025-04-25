@@ -38,4 +38,5 @@ def product_detail(request, pk):
         'ctg':ctg
     }
     return render(request, 'detail.html', ctx)
-# def post_add(request):
+
+

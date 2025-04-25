@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .serializers import ProductSerializer
 from product.models import Product
+from rest_framework.views import APIView
 
 
 @api_view(['GET', 'POST'])
@@ -43,3 +44,41 @@ def detail_ctg(request, pk):
     elif request.method == "DELETE":
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ProductView(APIView):
+    def get(self, request):
+        product = Product.objects.all()
+        result = ProductSerializer(product, many=True)
+        return Response({"data": result.data})
+
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data)
+        print(serializer.is_valid())
+        if serializer.is_valid():
+            result = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProductViews(APIView):
+    def get(self, request, pk):
+        try:
+            product = Product.objects.get(pk=pk)
+        except Product.DoesNotExist:
+            return Response({"Error": "Could not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        serializer = ProductSerializer(product, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"Error": "Could not edit"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        product.delete()
+        return Response("Product successful deleted",status=status.HTTP_204_NO_CONTENT)

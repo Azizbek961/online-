@@ -9,7 +9,6 @@ class Blog(models.Model):
     is_sticky = models.BooleanField(default=False)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     poster = models.TextField()
-    # created_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
